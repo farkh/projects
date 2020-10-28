@@ -106,7 +106,7 @@ export const Sidebar: React.FC<SidebarProps> = inject(
       if (!projects?.length) {
         fetchProjects()
       }
-    }, [fetchProjects, projects])
+    }, [])
 
     return (
         <Drawer
