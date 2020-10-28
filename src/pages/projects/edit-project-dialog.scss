@@ -1,0 +1,20 @@
+.createProjectDialog {
+    position: relative;
+
+    & > div > div {
+        overflow: visible;
+    }
+
+    .editProjectDialogColor {
+        width: 64px;
+        height: 64px;
+        position: absolute;
+        top: -32px;
+        left: calc(50% - 32px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 36px;
+        cursor: pointer;
+    }
+}

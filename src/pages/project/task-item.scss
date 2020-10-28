@@ -1,0 +1,28 @@
+.deleteTaskButton {
+    display: none;
+}
+
+.taskItem {
+    &:hover {
+        background-color: #f1f1f1;
+        cursor: pointer;
+
+        .deleteTaskButton {
+            display: block;
+        }
+    }
+
+    & + .taskItem {
+        border-top: 1px solid #f1f1f1;
+    }
+}
+
+.taskTitle {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.completedTaskTitle {
+    text-decoration: line-through;
+}

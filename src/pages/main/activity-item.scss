@@ -1,0 +1,34 @@
+.activityItem {
+    padding: 8px 0;
+
+    & + .activityItem {
+        border-top: 1px solid #f1f1f1;
+    }
+}
+
+.activityUserAvatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.activityUserName {
+    margin: 0;
+    font-weight: 700;
+}
+
+.activityType {
+    border-radius: 20px;
+    font-size: 12px;
+    padding: 4px;
+    text-align: center;
+    margin: 0;
+    font-weight: 600;
+    color: #ffffff;
+    max-width: 100px;
+}
+
+.activityObject {
+    font-size: 13px;
+    margin: 0;
+}

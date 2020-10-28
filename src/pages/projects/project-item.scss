@@ -1,0 +1,45 @@
+.projectItem {
+    position: relative;
+    margin-bottom: 24px;
+    min-height: 200px;
+    max-width: 340px;
+
+    .projectItemContent {
+        padding-top: 28px;
+        height: 100%;
+    }
+}
+
+.projectColor {
+    width: 56px;
+    height: 56px;
+    position: absolute;
+    top: -28px;
+    left: calc(50% - 28px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 36px;
+}
+
+.favoriteButton {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    svg {
+        color: #F08700;
+    }
+}
+
+.projectTitle {
+    margin: 0;
+    font-size: 18px;
+    text-align: center;
+}
+
+.projectItemNavlink {
+    text-decoration: none;
+    color: #ffffff;
+    margin-left: auto;
+}

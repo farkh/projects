@@ -1,0 +1,32 @@
+.projectContainer {
+    position: relative;
+    margin-top: 48px;
+    padding-top: 48px;
+}
+
+.projectColorBlock {
+    width: 78px;
+    height: 78px;
+    position: absolute;
+    top: -39px;
+    left: calc(50% - 39px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 48px;
+}
+
+.projectTitle {
+    text-align: center;
+}
+
+.deadlineContainer {
+    max-width: 130px;
+    margin: 0 auto;
+    text-align: center;
+    color: #ffffff;
+    background-color: rgb(255, 114, 96);
+    font-size: 15px;
+    padding: 6px;
+    border-radius: 20px;
+}
