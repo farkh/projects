@@ -15,7 +15,7 @@ export enum Page {
 export interface BugReport {
     _id?: string
     user_id?: any
-    avatar?: string
+    issuerAvatar?: string
     title?: string
     page?: Page
     description?: string

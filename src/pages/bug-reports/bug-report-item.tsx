@@ -29,7 +29,10 @@ export const BugReportItem: React.FC<BugReportItemProps> = inject(
                 <Paper>
                     <Box p={2}>
                         <Grid container spacing={2}>
-                            <Grid item xs={11} container spacing={2}>
+                            <Grid item xs={1} container spacing={2} justify="center">
+                                <img src={report.issuerAvatar} alt="ava" style={{ width: 36, height: 36, borderRadius: '50%', marginTop: 16 }} />
+                            </Grid>
+                            <Grid item xs={10} container spacing={2}>
                                 <Grid item xs={9}>
                                     <h3>{report.title}</h3>
                                 </Grid>
