@@ -75,7 +75,7 @@ export class AuthStore {
     get isFormValid(): boolean {
         const { email, password, passwordConfirmation, name } = this.userData
 
-        // if (!password?.trim()?.length || password?.trim()?.length < 6) return false
+        if (!password?.trim()?.length || password?.trim()?.length < 6) return false
         if (this.authType === AuthType.Register && password !== passwordConfirmation) return false
         if (this.authType === AuthType.Register && !name?.trim()?.length) return false
 
