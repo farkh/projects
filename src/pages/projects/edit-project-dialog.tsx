@@ -138,6 +138,7 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
                         color="primary"
                         variant="contained"
                         onClick={saveProject}
+                        disabled={!editingProject?.title || !editingProject?.description || !editingProject?.color}
                         style={{ marginLeft: 'auto' }}
                     >
                         Save

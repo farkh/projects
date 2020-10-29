@@ -32,17 +32,19 @@ export const EditTaskItem: React.FC<EditTaskItemProps> = inject(
         } = tasksStore
 
         const handleClearDummyTask = (): void => {
-            if (editingTask._id === '-1' && !editingTask.title && !editingTask.description) {
+            if (editingTask?._id === '-1') {
                 let tasks = projectTasks
                 tasks.shift()
                 setProjectTasks(tasks)
             }
         }
 
-        const useOutsideAlerter = (ref) => {
+        const useOutsideClearer = (ref) => {
             React.useEffect(() => {
                 const handleClickOutside = (event): void => {
-                    if (ref.current && !ref.current.contains(event.target)) {
+                    const datepickerContainer = document.querySelector('.MuiPickersBasePicker-container')
+
+                    if (ref.current && !ref.current.contains(event.target) && !datepickerContainer?.contains(event.target)) {
                         if (editingTaskModified) {
                             setConfirmationOpen(true)
                         } else {
@@ -59,7 +61,7 @@ export const EditTaskItem: React.FC<EditTaskItemProps> = inject(
             }, [ref, editingTaskModified])
         }
 
-        useOutsideAlerter(editingTaskRef)
+        useOutsideClearer(editingTaskRef)
 
         return (
             <Paper ref={editingTaskRef} elevation={3} style={{ marginBottom: 16 }}>

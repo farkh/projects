@@ -17,14 +17,10 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = inject(
     ProjectsStore.storeName,
 )(observer(
     props => {
-        const { projects, fetchProjects, editDialogOpen, setEditDialogOpen, setEditingProject, reset } = props.projectsStore
+        const { projects, fetchProjects, editDialogOpen, setEditDialogOpen, setEditingProject, setDummyProject } = props.projectsStore
 
         React.useEffect(() => {
             fetchProjects()
-
-            // return () => {
-                // reset()
-            // }
         }, [])
 
         return (
@@ -47,7 +43,10 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = inject(
 
                 <Fab
                     color="primary"
-                    onClick={() => setEditDialogOpen(true)}
+                    onClick={() => {
+                        setDummyProject()
+                        setEditDialogOpen(true)
+                    }}
                     style={{
                         position: 'fixed',
                         bottom: 20,

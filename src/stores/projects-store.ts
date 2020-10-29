@@ -1,9 +1,18 @@
 import { observable, action, runInAction } from 'mobx'
+import moment from 'moment'
+
 import { store } from './stores-repository'
 import { withSpinner } from './with-spinner'
 import { ProjectsService, Project, ProjectsFilter } from '../services/projects-serivce'
 import { NextMiddleware, RequestError, Response } from '../services/base-http-service'
 import { isNil } from 'lodash'
+
+export const dummyProject: Project = {
+    title: '',
+    description: '',
+    color: '#083D77',
+    deadline: moment().add(1, 'days').format('DD MMM YYYY'),
+}
 
 @store
 export class ProjectsStore {
@@ -38,6 +47,11 @@ export class ProjectsStore {
     setEditingProject = (project?: Project): void => {
         this.editingProject = project
         this.originalEditingProject = project
+    }
+
+    @action
+    setDummyProject = (): void => {
+        this.editingProject = dummyProject
     }
 
     @action

@@ -15,6 +15,7 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
     return (
         <MuiPickersUtilsProvider utils={MomentUtils}>
             <KeyboardDatePicker
+                autoOk
                 disableToolbar
                 fullWidth={fullWidth}
                 variant="inline"
