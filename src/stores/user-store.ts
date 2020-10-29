@@ -6,6 +6,7 @@ import { store } from './stores-repository'
 export interface AuthorizedUser {
     id: string
     name: string
+    admin?: boolean
     email: string
     avatar: string
 }

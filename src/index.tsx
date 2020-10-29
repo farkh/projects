@@ -6,6 +6,7 @@ import { AuthStore } from './stores/auth-store'
 import { TasksStore } from './stores/tasks-store'
 import { ProjectsStore } from './stores/projects-store'
 import { ActivityStore } from './stores/activity-store'
+import { BugReportsStore } from './stores/bug-reports-store'
 
 import { getStore } from './stores/stores-repository'
 import { createStore } from './stores/store'
@@ -21,6 +22,7 @@ const startApp = (): void => {
   getStore<TasksStore>(TasksStore.storeName).init(process.env?.REACT_APP_API_URI || '')
   getStore<ProjectsStore>(ProjectsStore.storeName).init(process.env?.REACT_APP_API_URI || '')
   getStore<ActivityStore>(ActivityStore.storeName).init(process.env?.REACT_APP_API_URI || '')
+  getStore<BugReportsStore>(BugReportsStore.storeName).init(process.env?.REACT_APP_API_URI || '')
 
   ReactDOM.render(
     <Provider {...store}>

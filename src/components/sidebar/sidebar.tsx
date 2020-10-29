@@ -15,6 +15,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import HomeIcon from '@material-ui/icons/Home'
 import AppsIcon from '@material-ui/icons/Apps'
 import ListIcon from '@material-ui/icons/List'
+import BugReportIcon from '@material-ui/icons/BugReport'
 
 import { Routes } from '../../core/routes'
 import { ProjectsStore } from '../../stores/projects-store'
@@ -171,6 +172,15 @@ export const Sidebar: React.FC<SidebarProps> = inject(
                     </ListItem>
                   </NavLink>
                 ))}
+
+                <Divider />
+
+                <NavLink onClick={onCollapseSidebar} className="navlink" to={Routes.BugReports}>
+                  <ListItem>
+                    <ListItemIcon><BugReportIcon /></ListItemIcon>
+                    <ListItemText primary={'Bug reports'} />
+                  </ListItem>
+                </NavLink>
             </List>
         </Drawer>
     )

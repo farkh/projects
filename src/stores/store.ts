@@ -7,6 +7,7 @@ import { AuthStore } from './auth-store'
 import { TasksStore } from './tasks-store'
 import { ProjectsStore } from './projects-store'
 import { ActivityStore } from './activity-store'
+import { BugReportsStore } from './bug-reports-store'
 
 export const createStore = (): {[storeName: string]: any} => {
     putStore(AppStore.storeName, new AppStore())
@@ -15,6 +16,7 @@ export const createStore = (): {[storeName: string]: any} => {
     putStore(TasksStore.storeName, new TasksStore())
     putStore(ProjectsStore.storeName, new ProjectsStore())
     putStore(ActivityStore.storeName, new ActivityStore())
+    putStore(BugReportsStore.storeName, new BugReportsStore())
     putStore(AuthStore.storeName, new AuthStore())
 
     let store: any = {}
