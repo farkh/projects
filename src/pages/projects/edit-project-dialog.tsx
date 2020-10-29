@@ -11,6 +11,7 @@ import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import EmojiPicker from 'emoji-picker-react'
 
+import { DatePicker } from '../../components/date-picker/date-picker'
 import { ProjectsStore } from '../../stores/projects-store'
 
 import './edit-project-dialog.scss'
@@ -74,7 +75,10 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
                                 fullWidth
                                 variant="outlined"
                                 value={editingProject?.title}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => modifyEditingProject({ title: e.target.value })}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    if (e.target.value?.length > 30) return
+                                    modifyEditingProject({ title: e.target.value })
+                                }}
                                 label="Title"
                                 placeholder="Enter title"
                             />
@@ -89,7 +93,10 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
                                 multiline
                                 rows={3}
                                 value={editingProject?.description}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => modifyEditingProject({ description: e.target.value })}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    if (e.target.value?.length > 250) return
+                                    modifyEditingProject({ description: e.target.value })
+                                }}
                                 label="Description"
                                 placeholder="Enter description"
                             />
@@ -110,15 +117,9 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
                         </Grid>
 
                         <Grid item xs={12}>
-                            <TextField
-                                id="projectDeadlineInput"
-                                name="deadline"
-                                fullWidth
-                                variant="outlined"
-                                type="date"
+                            <DatePicker
                                 value={editingProject?.deadline}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => modifyEditingProject({ deadline: new Date(e.target.value) })}
-                                label="Due date"
+                                onValueChange={(deadline: string) => modifyEditingProject({ deadline })}
                             />
                         </Grid>
                     </Grid>

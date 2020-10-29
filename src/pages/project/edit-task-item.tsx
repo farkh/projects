@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
+import { DatePicker } from '../../components/date-picker/date-picker'
 import { ConfirmationDialog } from '../../components/confirmation-dialog/confirmation-dialog'
 import { TasksStore } from '../../stores/tasks-store'
 
@@ -63,28 +64,29 @@ export const EditTaskItem: React.FC<EditTaskItemProps> = inject(
         return (
             <Paper ref={editingTaskRef} elevation={3} style={{ marginBottom: 16 }}>
                 <Box p={1}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={10}>
+                    <Grid container spacing={2} alignItems="flex-end">
+                        <Grid item xs={8}>
                             <TextField
                                 fullWidth
-                                variant="outlined"
                                 label="Task title"
                                 value={editingTask?.title}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => modifyEditingTask({ title: e.target.value })}
                             />
                         </Grid>
 
-                        <Grid item xs={2}>
-                            <p className="taskDeadline">{new Date(editingTask?.deadline).toLocaleDateString()}</p>
+                        <Grid item xs={4}>
+                            <DatePicker
+                                value={editingTask?.deadline}
+                                onValueChange={deadline => modifyEditingTask({ deadline })}
+                            />
                         </Grid>
 
                         <Grid item xs={12}>
                             <TextField
                                 fullWidth
-                                variant="outlined"
                                 multiline
                                 label="Description"
-                                rows={3}
+                                rows={2}
                                 value={editingTask?.description}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => modifyEditingTask({ description: e.target.value })}
                             />

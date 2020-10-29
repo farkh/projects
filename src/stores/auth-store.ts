@@ -1,13 +1,21 @@
-import { observable, action, runInAction } from 'mobx'
+import { observable, action, runInAction, computed } from 'mobx'
 
 import { AuthService } from '../services/auth-service'
-import { UserStore } from './user-store'
 import { getStore, store } from './stores-repository'
 import { setAuthToken } from '../utils/auth'
 import { deleteCookie, getCookie, setCookie } from '../utils/cookies'
 import { withSpinner } from './with-spinner'
-import { AppStore } from './app-store'
 import { NextMiddleware, RequestError, Response } from '../services/base-http-service'
+
+import { AppStore } from './app-store'
+import { UserStore } from './user-store'
+import { ProjectsStore } from './projects-store'
+import { TasksStore } from './tasks-store'
+
+interface AuthError {
+    email?: string
+    password?: string
+}
 
 export interface UserFormData {
     name?: string
@@ -22,6 +30,8 @@ export enum AuthType {
     Register = 'REGISTER',
 }
 
+const validEmailRegexp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 @store
 export class AuthStore {
     static storeName: string = 'authStore'
@@ -33,11 +43,13 @@ export class AuthStore {
     authType: AuthType = AuthType.Login
 
     @observable
-    errorMessage: string = ''
+    error: AuthError = null
 
     private authService: AuthService = null
     private userStore: UserStore = getStore<UserStore>(UserStore.storeName)
     private appStore: AppStore = getStore<AppStore>(AppStore.storeName)
+    private projectsStore: ProjectsStore = getStore<ProjectsStore>(ProjectsStore.storeName)
+    private tasksStore: TasksStore = getStore<TasksStore>(TasksStore.storeName)
 
     init = (serverUrl: string) => {
         this.authService = new AuthService(serverUrl, {})
@@ -46,7 +58,8 @@ export class AuthStore {
     @action
     setAuthType = (authType: AuthType): void => {
         this.authType = authType
-        this.setErrorMessage(null)
+        this.userData = {}
+        this.setError(null)
     }
 
     @action
@@ -55,19 +68,30 @@ export class AuthStore {
             ...this.userData,
             ...user,
         }
-        this.setErrorMessage(null)
+        this.setError(null)
+    }
+
+    @computed
+    get isFormValid(): boolean {
+        const { email, password, passwordConfirmation, name } = this.userData
+
+        // if (!password?.trim()?.length || password?.trim()?.length < 6) return false
+        if (this.authType === AuthType.Register && password !== passwordConfirmation) return false
+        if (this.authType === AuthType.Register && !name?.trim()?.length) return false
+
+        return validEmailRegexp.test(email)
     }
 
     @action
-    setErrorMessage = (message: string): void => {
-        this.errorMessage = message
+    setError = (message: AuthError): void => {
+        this.error = message
     }
 
     @action
     login = async (): Promise<void> => {
         withSpinner(this.authService.login(this.userData, {
-            errorMiddlewares: [(error: RequestError, next: NextMiddleware) => {
-                this.setErrorMessage(error.response.data.error)
+            errorMiddlewares: [(error: RequestError, _: NextMiddleware) => {
+                this.setError({ password: error.response.data.error })
             }],
             responseMiddlewares: [(response: Response, next: NextMiddleware) => {
                 const { token, tokenExpiration } = response.data.data
@@ -82,14 +106,9 @@ export class AuthStore {
 
     @action
     register = async (): Promise<void> => {
-        if (this.userData.password !== this.userData.passwordConfirmation) {
-            this.setErrorMessage('Passwords must match')
-            return
-        }
-
         withSpinner(this.authService.register(this.userData, {
-            errorMiddlewares: [(error: RequestError, next: NextMiddleware) => {
-                this.setErrorMessage(error.response.data.error)
+            errorMiddlewares: [(error: RequestError, _: NextMiddleware) => {
+                this.setError({ email: error.response.data.error })
             }],
             responseMiddlewares: [(response: Response, next: NextMiddleware) => {
                 const { token, tokenExpiration } = response.data.data
@@ -97,6 +116,7 @@ export class AuthStore {
                 setCookie('authorization', token, { expiresIn: tokenExpiration * 7 * 24 * 60 * 60 })
                 setAuthToken(token)
                 this.pullUser()
+                next()
             }],
         }))
     }
@@ -122,13 +142,17 @@ export class AuthStore {
     logout = (): void => {
         setAuthToken(null)
         deleteCookie('authorization')
-        this.userStore.setCurrentUser(null)
+
+        // Reset all stores
+        this.userStore.reset()
+        this.projectsStore.reset()
+        this.tasksStore.reset()
     }
 
     @action
     reset = (): void => {
         this.userData = {}
         this.authType = AuthType.Login
-        this.errorMessage = ''
+        this.error = null
     }
 }

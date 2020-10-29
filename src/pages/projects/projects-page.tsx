@@ -17,10 +17,14 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = inject(
     ProjectsStore.storeName,
 )(observer(
     props => {
-        const { projects, fetchProjects, editDialogOpen, setEditDialogOpen, setEditingProject } = props.projectsStore
+        const { projects, fetchProjects, editDialogOpen, setEditDialogOpen, setEditingProject, reset } = props.projectsStore
 
         React.useEffect(() => {
             fetchProjects()
+
+            // return () => {
+                // reset()
+            // }
         }, [])
 
         return (

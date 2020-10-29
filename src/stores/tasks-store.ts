@@ -114,22 +114,32 @@ export class TasksStore {
     @action
     updateTask = async (task?: Task): Promise<void> => {
         const editedTask = isNil(task) ? this.editingTask : task
+        const editingIndex: number = this.projectTasks?.findIndex(task => task._id === editedTask._id)
+        const todayTaskIndex: number = this.todayTasks?.findIndex(task => task._id === editedTask._id)
 
-        withSpinner(this.tasksService.updateTask(editedTask._id, editedTask, {
+        // Immediately update tasks list for better UX
+        this.setProjectTasks([
+            ...this.projectTasks.slice(0, editingIndex),
+            editedTask,
+            ...this.projectTasks.slice(editingIndex + 1),
+        ])
+        if (todayTaskIndex > -1) {
+            this.todayTasks = [
+                ...this.todayTasks.slice(0, todayTaskIndex),
+                editedTask,
+                ...this.todayTasks.slice(todayTaskIndex + 1),
+            ]
+        }
+
+        this.tasksService.updateTask(editedTask._id, editedTask, {
             errorMiddlewares: [(error: RequestError, _: NextMiddleware) => {
                 console.log('error!!', error.response.data.error)
             }],
             responseMiddlewares: [(response: Response, next: NextMiddleware) => {
-                const editingIndex: number = this.projectTasks?.findIndex(task => task._id === response.data.data._id)
-                this.setProjectTasks([
-                    ...this.projectTasks.slice(0, editingIndex),
-                    response.data.data,
-                    ...this.projectTasks.slice(editingIndex + 1),
-                ])
                 this.setEditingTask(null)
                 next()
             }],
-        }))
+        })
     }
 
     @action

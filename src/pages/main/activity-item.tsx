@@ -66,7 +66,7 @@ export const ActivityItem: React.FC<ActivityItemProps> = inject(
         const { activity, userStore } = props
 
         return (
-            <Grid xs={12} container spacing={1} className="activityItem">
+            <Grid item xs={12} container spacing={1} className="activityItem">
                 <Grid item xs={2}>
                     <img className="activityUserAvatar" src={userStore?.currentUser?.avatar} alt="Avatar" />
                 </Grid>

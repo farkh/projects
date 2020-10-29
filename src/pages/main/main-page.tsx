@@ -3,6 +3,7 @@ import { inject, observer } from 'mobx-react'
 import Box from '@material-ui/core/Box'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import Hidden from '@material-ui/core/Hidden'
 
 import { FavoriteProjects } from './favorite-projects'
 import { CreateTaskInput } from './create-task-input'
@@ -33,9 +34,11 @@ export const MainPage: React.FC<MainPageProps> = inject(
                     </Grid>
                 </Grid>
 
-                <Grid item xs={12} md={3} style={{ height: '100%' }}>
-                    <Activities />
-                </Grid>
+                <Hidden smDown>
+                    <Grid item xs={12} md={3} style={{ height: '100%' }}>
+                        <Activities />
+                    </Grid>
+                </Hidden>
             </Grid>
         )
     }

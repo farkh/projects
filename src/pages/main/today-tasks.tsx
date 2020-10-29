@@ -36,7 +36,7 @@ export const TodayTasks: React.FC<TodayTasksProps> = inject(
                     <Paper style={{ marginRight: -20 }}>
                         <Grid container spacing={0} style={{ maxHeight: 265, overflow: 'hidden', overflowY: 'auto' }}>
                             {todayTasks?.length > 0 && todayTasks?.map(task => (
-                                <TaskItem key={task._id} task={task} />
+                                <TaskItem disabledEditing key={task._id} task={task} />
                             ))}
                         </Grid>
                     </Paper>

@@ -23,7 +23,8 @@ export const AuthPage: React.FC<AuthPageProps> = inject(
     UserStore.storeName,
 )(observer(
     props => {
-        const { userData, setUserData, authType, setAuthType, errorMessage, login, register } = props.authStore
+        const [inputKey, setInputKey] = React.useState<number>(0)
+        const { userData, setUserData, authType, setAuthType, error, login, register, isFormValid } = props.authStore
         const { loggedIn } = props.userStore
 
         const handleAuth = (): void => {
@@ -38,14 +39,16 @@ export const AuthPage: React.FC<AuthPageProps> = inject(
                     <Box p={2}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
-                                {/* TODO: add form validation */}
                                 <TextField
                                     id="authEmailInput"
+                                    key={`emailInput-${inputKey}`}
                                     name="email"
                                     fullWidth
                                     value={userData?.email}
                                     variant="outlined"
                                     type="email"
+                                    error={error?.email?.length > 0}
+                                    helperText={error?.email}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserData({ email: e.target.value })}
                                     label="Email"
                                     placeholder="Enter email"
@@ -56,6 +59,7 @@ export const AuthPage: React.FC<AuthPageProps> = inject(
                                 <Grid item xs={12}>
                                     <TextField
                                         id="authNameInput"
+                                        key={`nameInput-${inputKey}`}
                                         name="name"
                                         fullWidth
                                         value={userData?.name}
@@ -70,24 +74,24 @@ export const AuthPage: React.FC<AuthPageProps> = inject(
                             <Grid item xs={12}>
                                 <TextField
                                     id="authPasswordInput"
+                                    key={`passwordInput-${inputKey}`}
                                     name="password"
                                     fullWidth
                                     value={userData?.password}
                                     type="password"
                                     variant="outlined"
-                                    error={!!errorMessage?.length}
+                                    error={error?.password?.length > 0}
+                                    helperText={error?.password}
                                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserData({ password: e.target.value })}
                                     label="Password"
                                 />
-                                {errorMessage?.length > 0 && (
-                                    <p className="authErrorMessage">{errorMessage}</p>
-                                )}
                             </Grid>
 
                             {authType === AuthType.Register && (
                                 <Grid item xs={12}>
                                     <TextField
                                         id="authPasswordConfirmationInput"
+                                        key={`passwordConfirmationInput-${inputKey}`}
                                         name="passwordConfirmation"
                                         fullWidth
                                         value={userData?.passwordConfirmation}
@@ -104,6 +108,7 @@ export const AuthPage: React.FC<AuthPageProps> = inject(
                                     fullWidth
                                     color="primary"
                                     variant="contained"
+                                    disabled={!isFormValid}
                                     onClick={handleAuth}
                                 >
                                     {authType === AuthType.Login && 'Login'}
@@ -117,6 +122,7 @@ export const AuthPage: React.FC<AuthPageProps> = inject(
                                     onClick={() => {
                                         if (authType === AuthType.Login) setAuthType(AuthType.Register)
                                         else setAuthType(AuthType.Login)
+                                        setInputKey(inputKey + 1)
                                     }}
                                 >
                                     {authType === AuthType.Login && 'Not a member? Create account now'}

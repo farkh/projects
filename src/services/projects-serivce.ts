@@ -9,7 +9,7 @@ export interface ProjectsFilter {
     title?: string
     color?: string
     cateogry?: any
-    deadline?: Date
+    deadline?: string
     favorite?: boolean
 }
 
@@ -19,7 +19,7 @@ export interface Project {
     title?: string
     description?: string
     color?: string
-    deadline?: Date
+    deadline?: string
     category?: any
     favorite?: boolean
     emoji?: string

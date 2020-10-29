@@ -16,6 +16,7 @@ import { toJS } from 'mobx'
 
 interface TaskItemProps {
     task: Task
+    disabledEditing?: boolean
     tasksStore?: TasksStore
 }
 
@@ -23,17 +24,17 @@ export const TaskItem: React.FC<TaskItemProps> = inject(
     TasksStore.storeName,
 )(observer(
     props => {
-        const { task, tasksStore } = props
+        const { task, disabledEditing, tasksStore } = props
         const { setEditingTask, editingTask, updateTask, removeTask } = tasksStore
         const { _id, completed, title, description, deadline, status } = task
 
         const handleTaskClick = (e: React.MouseEvent<HTMLDivElement>): void => {
-            if (task.completed) return
+            if (task.completed || disabledEditing) return
 
             setEditingTask(task)
         }
 
-        if (!isNil(editingTask) && editingTask?._id === task._id && !task.completed) return (
+        if (!isNil(editingTask) && editingTask?._id === task._id && !task.completed && !disabledEditing) return (
             <EditTaskItem />
         )
 
