@@ -41,9 +41,6 @@ export const TaskItem: React.FC<TaskItemProps> = inject(
         const renderDeadline = (deadline: string): React.ReactElement => {
             const daysLeft = calculateDifference(deadline)
 
-            console.log('daysLeft', daysLeft
-            )
-
             if (daysLeft < 0) return <p className="deadlineChip overdue">Overdue</p>
             if (daysLeft === 0) return <p className="deadlineChip today">Today</p>
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { isNil } from 'lodash'
 import Dialog from '@material-ui/core/Dialog'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -35,7 +34,6 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
             isNewProject,
             editingProjectModified,
         } = projectsStore
-        console.log('editingProjectModified', editingProjectModified)
 
         return (
             <Dialog
