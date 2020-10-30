@@ -81,4 +81,9 @@ export class BugReportsStore {
         this.pageFilter = null
         this.editingBugReport = null
     }
+
+    @action
+    resetEditing = (): void => {
+        this.editingBugReport = null
+    }
 }
