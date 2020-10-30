@@ -17,6 +17,8 @@ import { Page } from '../../services/bug-reports-service'
 import { BugReportItem } from './bug-report-item'
 import { AddBugReportDialog } from './add-bug-report-dialog'
 
+import './bug-reports-page.scss'
+
 interface SelectOption {
     value: string
     label: string
@@ -107,12 +109,7 @@ export const BugReportsPage: React.FC<BugReportsPageProps> = inject(
                 <Fab
                     color="primary"
                     onClick={() => setAddDialogOpen(true)}
-                    style={{
-                        position: 'fixed',
-                        bottom: 20,
-                        right: 20,
-                        zIndex: 2,
-                    }}
+                    className="fab"
                 >
                     <AddIcon />
                 </Fab>

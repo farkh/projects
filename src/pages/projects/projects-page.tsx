@@ -9,6 +9,8 @@ import { ProjectItem } from './project-item'
 import { EditProjectDialog } from './edit-project-dialog'
 import { ProjectsStore } from '../../stores/projects-store'
 
+import './projects-page.scss'
+
 interface ProjectsPageProps {
     projectsStore?: ProjectsStore
 }
@@ -47,12 +49,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = inject(
                         setDummyProject()
                         setEditDialogOpen(true)
                     }}
-                    style={{
-                        position: 'fixed',
-                        bottom: 20,
-                        right: 20,
-                        zIndex: 2,
-                    }}
+                    className="fab"
                 >
                     <AddIcon />
                 </Fab>

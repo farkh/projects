@@ -26,13 +26,10 @@ export const AddBugReportDialog: React.FC<AddBugReportDialogProps> = inject(
 )(observer(
     props => {
         const { onClose, bugReportsStore } = props
-        const { editingBugReport, modifyEditingBugReport, createBugReport } = bugReportsStore
+        const { editingBugReport, modifyEditingBugReport, createBugReport, reset } = bugReportsStore
 
         return (
-            <Dialog
-                open
-                onClose={onClose}
-            >
+            <Dialog open>
                 <DialogTitle>Create bug report</DialogTitle>
                 <DialogContent>
                     <Grid container spacing={2}>
@@ -84,7 +81,12 @@ export const AddBugReportDialog: React.FC<AddBugReportDialogProps> = inject(
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={onClose}>
+                    <Button
+                        onClick={() => {
+                            onClose()
+                            reset()
+                        }
+                    }>
                         Cancel
                     </Button>
 
@@ -95,6 +97,7 @@ export const AddBugReportDialog: React.FC<AddBugReportDialogProps> = inject(
                         onClick={() => {
                             onClose()
                             createBugReport()
+                            reset()
                         }}
                     >
                         Create

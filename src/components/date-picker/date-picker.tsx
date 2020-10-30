@@ -24,6 +24,7 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
                 placeholder="Deadline"
                 id="date-picker-inline"
                 value={value}
+                minDate={moment().format('DD MMM YYYY')}
                 onChange={(date: Moment, _: string) => onValueChange(date.format('DD MMM YYYY'))}
                 style={{ margin: 0 }}
                 KeyboardButtonProps = {{

@@ -146,8 +146,8 @@ export const Sidebar: React.FC<SidebarProps> = inject(
                     </ListItem>
                 </NavLink>
 
-                <NavLink onClick={onCollapseSidebar} className="navlink" to={Routes.Projects}>
-                    <ListItem button key={Routes.Tasks}>
+                <NavLink onClick={onCollapseSidebar} className="navlink" to={Routes.Tasks}>
+                    <ListItem disabled button key={Routes.Tasks}>
                         <ListItemIcon><ListIcon /></ListItemIcon>
                         <ListItemText primary={'Tasks'} />
                     </ListItem>

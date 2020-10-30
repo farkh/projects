@@ -1,11 +1,11 @@
-import { observable, action, runInAction } from 'mobx'
+import { observable, action, toJS, computed } from 'mobx'
 import moment from 'moment'
+import { isEqual, isNil } from 'lodash'
 
 import { store } from './stores-repository'
 import { withSpinner } from './with-spinner'
 import { ProjectsService, Project, ProjectsFilter } from '../services/projects-serivce'
 import { NextMiddleware, RequestError, Response } from '../services/base-http-service'
-import { isNil } from 'lodash'
 
 export const dummyProject: Project = {
     title: '',
@@ -43,6 +43,16 @@ export class ProjectsStore {
         this.projectsService = new ProjectsService(serverUrl, {})
     }
 
+    @computed
+    get isNewProject(): boolean {
+        return isNil(this.originalEditingProject)
+    }
+
+    @computed
+    get editingProjectModified(): boolean {
+        return !isEqual(toJS(this.editingProject), toJS(this.originalEditingProject))
+    }
+
     @action
     setEditingProject = (project?: Project): void => {
         this.editingProject = project
@@ -76,7 +86,7 @@ export class ProjectsStore {
     }
 
     saveProject = (): void => {
-        if (isNil(this.originalEditingProject)) {
+        if (this.isNewProject) {
             this.createNewProject()
         } else {
             this.updateProject()

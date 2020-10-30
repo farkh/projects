@@ -25,9 +25,13 @@ export const MainPage: React.FC<MainPageProps> = inject(
         return (
             <Grid container spacing={2} alignItems="flex-start" style={{ height: '100%' }}>
                 <Grid item xs={12} md={9} container spacing={2}>
-                    <CreateTaskInput />
+                    <Grid item xs={12}>
+                        <CreateTaskInput />
+                    </Grid>
 
-                    <TodayTasks />
+                    <Grid item xs={12}>
+                        <TodayTasks />
+                    </Grid>
 
                     <Grid item xs={12}>
                         <FavoriteProjects />
