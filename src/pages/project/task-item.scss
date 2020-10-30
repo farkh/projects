@@ -15,6 +15,27 @@
     & + .taskItem {
         border-top: 1px solid #f1f1f1;
     }
+
+    .deadlineChip {
+        padding: 3px 6px;
+        border-radius: 15px;
+        text-align: center;
+        color: #ffffff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .overdue {
+        background-color: #ec4657;
+    }
+
+    .today {
+        background-color: #0fd776;
+    }
+
+    .future {
+        color: #222222;
+    }
 }
 
 .taskTitle {

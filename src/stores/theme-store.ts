@@ -28,9 +28,6 @@ export class ThemeStore {
     private lightTheme: Theme = createMuiTheme({
         palette: {
             type: ThemeMode.Light,
-            secondary: {
-                main: '#222222',
-            },
         },
     });
     

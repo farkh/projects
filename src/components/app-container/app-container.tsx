@@ -1,10 +1,12 @@
 import React from 'react'
 import Box from '@material-ui/core/Box'
+import Hidden from '@material-ui/core/Hidden'
 import Container from '@material-ui/core/Container'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 import { Navbar } from '../navbar/navbar'
 import { Sidebar } from '../sidebar/sidebar'
+import { BottomNavigationBar } from '../bottom-navigation-bar/bottom-navigation-bar'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,8 +26,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3),
+      padding: theme.spacing(1),
       maxWidth: 'unset',
+      overflow: 'hidden',
+      overflowY: 'auto',
+      height: '100%',
+      [theme.breakpoints.down('sm')]: {
+        paddingBottom: 60,
+      },
     },
   }),
 );
@@ -44,13 +52,18 @@ export const AppContainer: React.FC<AppContainerProps> = props => {
                 sidebarExpanded={sidebarExpanded}
                 onExpandSidebar={() => setSidebarExpanded(true)}
             />
-            <Sidebar
-                sidebarExpanded={sidebarExpanded}
-                onCollapseSidebar={() => setSidebarExpanded(false)}
-            />
+            <Hidden smDown>
+              <Sidebar
+                  sidebarExpanded={sidebarExpanded}
+                  onCollapseSidebar={() => setSidebarExpanded(false)}
+              />
+            </Hidden>
+            <Hidden mdUp>
+              <BottomNavigationBar />
+            </Hidden>
             <Container className={classes.content}>
                 <div className={classes.toolbar} />
-                <Box p={2} style={{ height: 'calc(100% - 64px)' }}>
+                <Box p={1}>
                     {props.children}
                 </Box>
             </Container>

@@ -30,3 +30,14 @@
     padding: 6px;
     border-radius: 20px;
 }
+
+.fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2;
+
+    @media screen and (max-width: 768px) {
+        bottom: 70px;
+    }
+}

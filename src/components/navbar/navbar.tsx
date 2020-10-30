@@ -3,16 +3,19 @@ import classNames from 'classnames'
 import { inject, observer } from 'mobx-react'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
+import Hidden from '@material-ui/core/Hidden'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import Switch from '@material-ui/core/Switch'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
 
 import { UserStore } from '../../stores/user-store'
 import { AuthStore } from '../../stores/auth-store'
+import { ThemeMode, ThemeStore } from '../../stores/theme-store'
 
 const drawerWidth: number = 240
 const useStyles = makeStyles((theme: Theme) =>
@@ -57,14 +60,16 @@ interface NavbarProps {
     onExpandSidebar: () => void
     authStore?: AuthStore
     userStore?: UserStore
+    themeStore?: ThemeStore
 }
 
 export const Navbar: React.FC<NavbarProps> = inject(
     AuthStore.storeName,
     UserStore.storeName,
+    ThemeStore.storeName,
 )(observer(
     props => {
-        const { sidebarExpanded, onExpandSidebar, authStore, userStore } = props
+        const { sidebarExpanded, onExpandSidebar, authStore, userStore, themeStore } = props
         const classes = useStyles()
         const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
         const accountMenuOpen = Boolean(anchorEl)
@@ -78,17 +83,19 @@ export const Navbar: React.FC<NavbarProps> = inject(
                     })}
                 >
                     <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            onClick={onExpandSidebar}
-                            className={classNames(classes.menuButton, {
-                                [classes.hide]: sidebarExpanded,
-                            })}
-                        >
-                            <MenuIcon />
-                        </IconButton>
+                        <Hidden smDown>
+                            <IconButton
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                onClick={onExpandSidebar}
+                                className={classNames(classes.menuButton, {
+                                    [classes.hide]: sidebarExpanded,
+                                })}
+                            >
+                                <MenuIcon />
+                            </IconButton>
+                        </Hidden>
                         <Typography variant="h6" className={classes.title}>
                             React App
                         </Typography>
@@ -123,6 +130,16 @@ export const Navbar: React.FC<NavbarProps> = inject(
                                     onClose={() => setAnchorEl(null)}
                                 >
                                     <MenuItem>{userStore?.currentUser?.name}</MenuItem>
+                                    <MenuItem>
+                                        Night mode:
+                                        <Switch
+                                            checked={themeStore?.mode === ThemeMode.Dark}
+                                            onChange={themeStore?.toggleDarkMode}
+                                            color="primary"
+                                            name="checkedB"
+                                            inputProps={{ 'aria-label': 'primary checkbox' }}
+                                        />
+                                    </MenuItem>
                                     <MenuItem onClick={authStore?.logout}>Logout</MenuItem>
                                 </Menu>
                             </div>

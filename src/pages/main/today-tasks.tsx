@@ -6,6 +6,8 @@ import Paper from '@material-ui/core/Paper'
 import { TaskItem } from '../../pages/project/task-item'
 import { TasksStore } from '../../stores/tasks-store'
 
+import './today-tasks.scss'
+
 interface TodayTasksProps {
     tasksStore?: TasksStore
 }
@@ -21,7 +23,7 @@ export const TodayTasks: React.FC<TodayTasksProps> = inject(
         }, [])
 
         return (
-            <Grid item xs={12} container spacing={2}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <h2 style={{ marginBottom: 4 }}>Today</h2>
                 </Grid>
@@ -33,10 +35,10 @@ export const TodayTasks: React.FC<TodayTasksProps> = inject(
                 )}
 
                 <Grid item xs={12} style={{ overflow: 'hidden' }}>
-                    <Paper style={{ marginRight: -20 }}>
+                    <Paper className="todayTasksContainer">
                         <Grid container spacing={0} style={{ maxHeight: 265, overflow: 'hidden', overflowY: 'auto' }}>
                             {todayTasks?.length > 0 && todayTasks?.map(task => (
-                                <TaskItem disabledEditing key={task._id} task={task} />
+                                <TaskItem todayTask key={task._id} task={task} />
                             ))}
                         </Grid>
                     </Paper>

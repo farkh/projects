@@ -67,7 +67,7 @@ export const EditTaskItem: React.FC<EditTaskItemProps> = inject(
             <Paper ref={editingTaskRef} elevation={3} style={{ marginBottom: 16 }}>
                 <Box p={1}>
                     <Grid container spacing={2} alignItems="flex-end">
-                        <Grid item xs={8}>
+                        <Grid item xs={12} md={8}>
                             <TextField
                                 fullWidth
                                 label="Task title"
@@ -76,8 +76,9 @@ export const EditTaskItem: React.FC<EditTaskItemProps> = inject(
                             />
                         </Grid>
 
-                        <Grid item xs={4}>
+                        <Grid item xs={12} md={4}>
                             <DatePicker
+                                fullWidth
                                 value={editingTask?.deadline}
                                 onValueChange={deadline => modifyEditingTask({ deadline })}
                             />

@@ -27,8 +27,15 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
     props => {
         const [emojiPickerOpen, setEmojiPickerOpen] = React.useState<boolean>(false)
         const { onClose, projectsStore } = props
-        const { editingProject, modifyEditingProject, saveProject } = projectsStore
-        const isNew = isNil(editingProject)
+        const {
+            editingProject,
+            modifyEditingProject,
+            saveProject,
+            removeProject,
+            isNewProject,
+            editingProjectModified,
+        } = projectsStore
+        console.log('editingProjectModified', editingProjectModified)
 
         return (
             <Dialog
@@ -38,7 +45,7 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
                 maxWidth="md"
             >
                 <DialogTitle>
-                    {isNew ? 'Create' : 'Edit'} project
+                    {isNewProject ? 'Create' : 'Edit'} project
                     <Paper
                         className="editProjectDialogColor"
                         style={{ backgroundColor: editingProject?.color || '#ffffff' }}
@@ -67,7 +74,7 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
                 </DialogTitle>
 
                 <DialogContent>
-                    <Grid container spacing={2}>
+                    <Grid container spacing={2} alignItems="flex-end">
                         <Grid item xs={12}>
                             <TextField
                                 id="projectTitleInput"
@@ -102,12 +109,11 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
+                        <Grid item xs={12} md={6}>
                             <TextField
                                 id="projectColorInput"
                                 name="color"
                                 fullWidth
-                                variant="outlined"
                                 type="color"
                                 value={editingProject?.color}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => modifyEditingProject({ color: e.target.value })}
@@ -116,8 +122,9 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
+                        <Grid item xs={12} md={6}>
                             <DatePicker
+                                fullWidth
                                 value={editingProject?.deadline}
                                 onValueChange={(deadline: string) => modifyEditingProject({ deadline })}
                             />
@@ -132,13 +139,27 @@ export const EditProjectDialog: React.FC<EditProjectDialogProps> = inject(
                     >
                         Cancel
                     </Button>
+                    {!isNewProject && (
+                        <Button
+                            id="removeButton"
+                            color="secondary"
+                            variant="contained"
+                            onClick={() => {
+                                removeProject(editingProject?._id)
+                                onClose()
+                            }}
+                            style={{ marginLeft: 16 }}
+                        >
+                            Remove
+                        </Button>
+                    )}
 
                     <Button
                         id="createButton"
                         color="primary"
                         variant="contained"
                         onClick={saveProject}
-                        disabled={!editingProject?.title || !editingProject?.description || !editingProject?.color}
+                        disabled={!editingProjectModified}
                         style={{ marginLeft: 'auto' }}
                     >
                         Save

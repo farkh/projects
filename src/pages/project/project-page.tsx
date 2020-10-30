@@ -134,12 +134,7 @@ export const ProjectPage: React.FC<ProjectPageProps> = inject(
                     <Fab
                         color="primary"
                         onClick={() => handleAddNewTask()}
-                        style={{
-                            position: 'fixed',
-                            bottom: 20,
-                            right: 20,
-                            zIndex: 2,
-                        }}
+                        className="fab"
                     >
                         <AddIcon />
                     </Fab>

@@ -45,7 +45,7 @@ export const CreateTaskInput: React.FC<CreateTaskInputProps> = inject(
         }, [])
         
         return (
-            <Grid item xs={12} container spacing={2}>
+            <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Paper>
                         <Box p={2}>
@@ -98,7 +98,7 @@ export const CreateTaskInput: React.FC<CreateTaskInputProps> = inject(
 
                                 {formExpanded && (
                                     <>
-                                        <Grid item xs={8}>
+                                        <Grid item xs={12} md={8}>
                                             <TextField
                                                 key={`descriptionInput-${inputKey}`}
                                                 fullWidth
@@ -113,9 +113,10 @@ export const CreateTaskInput: React.FC<CreateTaskInputProps> = inject(
                                             />
                                         </Grid>
 
-                                        <Grid item xs={4}>
+                                        <Grid item xs={12} md={4}>
                                             <DatePicker
                                                 key={`deadlineInput-${inputKey}`}
+                                                fullWidth
                                                 value={editingTask?.deadline}
                                                 onValueChange={(deadline: string) => modifyEditingTask({ deadline })}
                                             />

@@ -1,6 +1,7 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
 import classNames from 'classnames'
+import moment from 'moment'
 import Grid from '@material-ui/core/Grid'
 import Checkbox from '@material-ui/core/Checkbox'
 import IconButton from '@material-ui/core/IconButton'
@@ -16,7 +17,7 @@ import { toJS } from 'mobx'
 
 interface TaskItemProps {
     task: Task
-    disabledEditing?: boolean
+    todayTask?: boolean
     tasksStore?: TasksStore
 }
 
@@ -24,17 +25,32 @@ export const TaskItem: React.FC<TaskItemProps> = inject(
     TasksStore.storeName,
 )(observer(
     props => {
-        const { task, disabledEditing, tasksStore } = props
+        const { task, todayTask, tasksStore } = props
         const { setEditingTask, editingTask, updateTask, removeTask } = tasksStore
         const { _id, completed, title, description, deadline, status } = task
 
         const handleTaskClick = (e: React.MouseEvent<HTMLDivElement>): void => {
-            if (task.completed || disabledEditing) return
+            if (task.completed || todayTask) return
 
             setEditingTask(task)
         }
 
-        if (!isNil(editingTask) && editingTask?._id === task._id && !task.completed && !disabledEditing) return (
+        const calculateDifference = (deadline: string): number =>
+            moment(deadline, 'DD MMM YYYY').diff(moment(), 'days')
+
+        const renderDeadline = (deadline: string): React.ReactElement => {
+            const daysLeft = calculateDifference(deadline)
+
+            console.log('daysLeft', daysLeft
+            )
+
+            if (daysLeft < 0) return <p className="deadlineChip overdue">Overdue</p>
+            if (daysLeft === 0) return <p className="deadlineChip today">Today</p>
+
+            return <p className="deadlineChip future">{daysLeft} d.</p>
+        }
+        
+        if (!isNil(editingTask) && editingTask?._id === task._id && !task.completed && !todayTask) return (
             <EditTaskItem />
         )
 
@@ -48,7 +64,7 @@ export const TaskItem: React.FC<TaskItemProps> = inject(
                 alignItems="center"
                 onClick={handleTaskClick}
             >
-                <Grid item xs={1}>
+                <Grid item xs={2} md={1}>
                     <Checkbox
                         color="primary"
                         checked={completed}
@@ -60,14 +76,16 @@ export const TaskItem: React.FC<TaskItemProps> = inject(
                     />
                 </Grid>
 
-                <Grid item xs={8}>
+                <Grid item xs={7} md={8}>
                     <p className={classNames('taskTitle', {
                         ['completedTaskTitle']: task.completed,
                     })}>{title}</p>
                 </Grid>
 
                 <Grid item xs={2}>
-                    <p className="taskDeadline">Due: {new Date(deadline).toLocaleDateString()}</p>
+                    {!todayTask && (
+                        <p className="taskDeadline">{renderDeadline(task.deadline)}</p>
+                    )}
                 </Grid>
 
                 <Grid item xs={1}>
