@@ -26,7 +26,6 @@ const getTeamUserRoleOpts = (): { value: number, label: string }[] =>
     }))
 
 interface AddTeamUserDialogProps {
-    // onAdd: ({ userId: string, role: TeamUserRole }) => void
     onClose: () => void
     teamStore?: TeamStore
 }
@@ -44,8 +43,6 @@ export const AddTeamUserDialog: React.FC<AddTeamUserDialogProps> = inject(
             setAutocompleteSelectedValue,
             autocompleteSelectedUser,
         } = teamStore
-
-        console.log('getTeamUserRoleOpts', role, Object.keys(TeamUserRole), getTeamUserRoleOpts())
 
         return (
             <Dialog open onClose={onClose} className="addUserDialog">

@@ -3,9 +3,10 @@ import Chip from '@material-ui/core/Chip'
 import Avatar from '@material-ui/core/Avatar'
 import FaceIcon from '@material-ui/icons/Face'
 
+import { AuthorizedUser } from '../../stores/user-store'
+
 interface TeamUserProps {
-    // TODO:
-    user: any
+    user: AuthorizedUser
     onDeleteClick?: () => void
 }
 

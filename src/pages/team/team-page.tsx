@@ -26,16 +26,18 @@ export const TeamPage: React.FC<TeamPageProps> = inject(
 )(observer(
     props => {
         const { match, teamStore, projectsStore } = props
-        const { team, fetchTeamById, currentUserRole } = teamStore
+        const { team, fetchTeamById, currentUserRole, resetTeam } = teamStore
         const { editDialogOpen, setDummyProject, setEditDialogOpen, setEditingProject } = projectsStore
         const { id: teamId } = match.params
 
         React.useEffect(() => {
             fetchTeamById(teamId)
+
+            return () => {
+                resetTeam()
+            }
         }, [])
 
-        console.log('currentUSerRole', currentUserRole)
-        
         if (!team) return null
 
         return (
