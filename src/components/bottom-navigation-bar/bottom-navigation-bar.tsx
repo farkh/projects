@@ -4,7 +4,7 @@ import BottomNavigation from '@material-ui/core/BottomNavigation'
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 import HomeIcon from '@material-ui/icons/Home'
 import AppsIcon from '@material-ui/icons/Apps'
-import ListIcon from '@material-ui/icons/List'
+import TeamsIcon from '@material-ui/icons/Group'
 import BugReportIcon from '@material-ui/icons/BugReport'
 
 import { Routes } from '../../core/routes'
@@ -35,9 +35,9 @@ export const BottomNavigationBar: React.FC = () => {
             <BottomNavigationAction
                 disabled
                 component={NavLink}
-                to={Routes.Tasks}
-                label="Tasks"
-                icon={<ListIcon />}
+                to={Routes.Teams}
+                label="Teams"
+                icon={<TeamsIcon />}
             />
             <BottomNavigationAction
                 component={NavLink}

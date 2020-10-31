@@ -14,7 +14,6 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import HomeIcon from '@material-ui/icons/Home'
 import AppsIcon from '@material-ui/icons/Apps'
-import ListIcon from '@material-ui/icons/List'
 import BugReportIcon from '@material-ui/icons/BugReport'
 import TeamsIcon from '@material-ui/icons/Group'
 
