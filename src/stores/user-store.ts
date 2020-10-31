@@ -4,7 +4,7 @@ import { isNil } from 'lodash'
 import { store } from './stores-repository'
 
 export interface AuthorizedUser {
-    id: string
+    _id: string
     name: string
     admin?: boolean
     email: string
