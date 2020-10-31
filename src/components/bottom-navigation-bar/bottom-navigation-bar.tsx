@@ -33,7 +33,6 @@ export const BottomNavigationBar: React.FC = () => {
                 icon={<AppsIcon />}
             />
             <BottomNavigationAction
-                disabled
                 component={NavLink}
                 to={Routes.Teams}
                 label="Teams"
