@@ -18,6 +18,8 @@ const MainPage = lazy(() => import('./pages/main/main-page'))
 const ProjectPage = lazy(() => import('./pages/project/project-page'))
 const ProjectsPage = lazy(() => import('./pages/projects/projects-page'))
 const BugReportsPage = lazy(() => import('./pages/bug-reports/bug-reports-page'))
+const TeamsPage = lazy(() => import('./pages/teams/teams-page'))
+const TeamPage = lazy(() => import('./pages/team/team-page'))
 
 interface AppProps {
   appStore?: AppStore
@@ -56,6 +58,8 @@ export class App extends React.Component<AppProps> {
                 <PrivateRoute exact path={Routes.Projects} component={ProjectsPage} />
                 <PrivateRoute exact path={`${Routes.Projects}/:id`} component={ProjectPage} />
                 <PrivateRoute exact path={Routes.BugReports} component={BugReportsPage} />
+                <PrivateRoute exact path={Routes.Teams} component={TeamsPage} />
+                <PrivateRoute exact path={`${Routes.Teams}/:id`} component={TeamPage} />
               </AppContainer>
             </Switch>
           </BrowserRouter>

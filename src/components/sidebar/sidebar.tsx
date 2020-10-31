@@ -16,6 +16,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import AppsIcon from '@material-ui/icons/Apps'
 import ListIcon from '@material-ui/icons/List'
 import BugReportIcon from '@material-ui/icons/BugReport'
+import TeamsIcon from '@material-ui/icons/Group'
 
 import { Routes } from '../../core/routes'
 import { ProjectsStore } from '../../stores/projects-store'
@@ -146,16 +147,16 @@ export const Sidebar: React.FC<SidebarProps> = inject(
                     </ListItem>
                 </NavLink>
 
-                <NavLink onClick={onCollapseSidebar} className="navlink" to={Routes.Tasks}>
-                    <ListItem disabled button key={Routes.Tasks}>
-                        <ListItemIcon><ListIcon /></ListItemIcon>
-                        <ListItemText primary={'Tasks'} />
+                <NavLink onClick={onCollapseSidebar} className="navlink" to={Routes.Teams}>
+                    <ListItem button key={Routes.Teams}>
+                        <ListItemIcon><TeamsIcon /></ListItemIcon>
+                        <ListItemText primary={'Teams'} />
                     </ListItem>
                 </NavLink>
 
                 <Divider />
 
-                {projects?.map(project => (
+                {/* {projects?.map(project => (
                   <NavLink
                     key={project._id}
                     className="navlink"
@@ -171,7 +172,7 @@ export const Sidebar: React.FC<SidebarProps> = inject(
                       <ListItemText primary={project.title} />
                     </ListItem>
                   </NavLink>
-                ))}
+                ))} */}
 
                 <Divider />
 

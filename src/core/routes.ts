@@ -3,5 +3,6 @@ export enum Routes {
     Auth = '/auth',
     Projects = '/projects',
     Tasks = '/tasks',
+    Teams = '/teams',
     BugReports = '/bug-reports',
 }

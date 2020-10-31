@@ -2,7 +2,6 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import Fab from '@material-ui/core/Fab'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
 import AddIcon from '@material-ui/icons/Add'
 
 import { ProjectItem } from './project-item'
@@ -27,7 +26,9 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = inject(
 
         return (
             <Grid container spacing={2}>
-                <h1>Projects</h1>
+                <Grid item xs={12}>
+                    <h1>Projects</h1>
+                </Grid>
 
                 <Grid item xs={12} container spacing={2}>
                     {projects?.map(project => (
