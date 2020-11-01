@@ -27,7 +27,7 @@ export const TeamPage: React.FC<TeamPageProps> = inject(
     props => {
         const { match, teamStore, projectsStore } = props
         const { team, fetchTeamById, currentUserRole, resetTeam } = teamStore
-        const { editDialogOpen, setDummyProject, setEditDialogOpen, setEditingProject } = projectsStore
+        const { editDialogOpen, setDummyProject, setEditDialogOpen, setEditingProject, setTeamId } = projectsStore
         const { id: teamId } = match.params
 
         React.useEffect(() => {
@@ -75,6 +75,7 @@ export const TeamPage: React.FC<TeamPageProps> = inject(
                 <Fab
                     color="primary"
                     onClick={() => {
+                        setTeamId(teamId)
                         setDummyProject()
                         setEditDialogOpen(true)
                     }}

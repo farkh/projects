@@ -2,10 +2,11 @@ import { observable, action, toJS, computed } from 'mobx'
 import moment from 'moment'
 import { isEqual, isNil } from 'lodash'
 
-import { store } from './stores-repository'
+import { store, getStore } from './stores-repository'
 import { withSpinner } from './with-spinner'
 import { ProjectsService, Project, ProjectsFilter } from '../services/projects-serivce'
 import { NextMiddleware, RequestError, Response } from '../services/base-http-service'
+import { TeamStore } from './team-store'
 
 export const dummyProject: Project = {
     title: '',
@@ -36,8 +37,12 @@ export class ProjectsStore {
     @observable
     filter: ProjectsFilter = null
 
+    @observable
+    teamId: string = null
+
     private originalEditingProject: Project = null
     private projectsService: ProjectsService = null
+    private teamStore: TeamStore = getStore<TeamStore>(TeamStore.storeName)
 
     init = (serverUrl: string): void => {
         this.projectsService = new ProjectsService(serverUrl, {})
@@ -85,6 +90,11 @@ export class ProjectsStore {
         this.editDialogOpen = open
     }
 
+    @action
+    setTeamId = (id: string): void => {
+        this.teamId = id
+    }
+
     saveProject = (): void => {
         if (this.isNewProject) {
             this.createNewProject()
@@ -95,7 +105,7 @@ export class ProjectsStore {
 
     @action
     createNewProject = async (): Promise<void> => {
-        withSpinner(this.projectsService.createProject(this.editingProject, {
+        withSpinner(this.projectsService.createProject({ ...this.editingProject, team_id: this.teamId }, {
             errorMiddlewares: [(error: RequestError, _: NextMiddleware) => {
                 console.log('error!!', error.response.data.error)
             }],
@@ -103,6 +113,11 @@ export class ProjectsStore {
                 console.log('new project', response.data.data)
                 this.setEditDialogOpen(false)
                 this.fetchProjects()
+
+                if (this.teamId) {
+                    this.teamStore.fetchTeamById(this.teamId)
+                    this.setTeamId(null)
+                }
 
                 next()
             }],
@@ -200,5 +215,6 @@ export class ProjectsStore {
         this.editDialogOpen = false
         this.editingProject = null
         this.originalEditingProject = null
+        this.teamId = null
     }
 }
