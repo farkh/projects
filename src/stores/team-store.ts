@@ -219,7 +219,6 @@ export class TeamStore {
     @action
     getTeamUser = async (teamId: string): Promise<void> => {
         const response = await withSpinner(this.teamService.getTeamUser(teamId, {}))
-        console.log('response', response)
         this.currentUserRole = response.data?.role as TeamUserRole
     }
 

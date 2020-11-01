@@ -23,6 +23,7 @@ export interface Project {
     category?: any
     favorite?: boolean
     emoji?: string
+    team_id?: string
 }
 
 export interface ProjectsResponse {

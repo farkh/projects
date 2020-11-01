@@ -15,10 +15,10 @@ export const createStore = (): {[storeName: string]: any} => {
     putStore(UserStore.storeName, new UserStore())
     putStore(ThemeStore.storeName, new ThemeStore())
     putStore(TasksStore.storeName, new TasksStore())
-    putStore(ProjectsStore.storeName, new ProjectsStore())
     putStore(ActivityStore.storeName, new ActivityStore())
     putStore(BugReportsStore.storeName, new BugReportsStore())
     putStore(TeamStore.storeName, new TeamStore())
+    putStore(ProjectsStore.storeName, new ProjectsStore())
     putStore(AuthStore.storeName, new AuthStore())
 
     let store: any = {}
